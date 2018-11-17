@@ -25,6 +25,7 @@ node {
          }
       }
    stage('Deploy') {
+      sh "chmod 644 jenkins.pem"
       sh "scp -r -i jenkins.pem target/*.jar  ubuntu@ec2-18-216-165-122.us-east-2.compute.amazonaws.com:/home/ubuntu/workspace/r2d2"
    }
 
