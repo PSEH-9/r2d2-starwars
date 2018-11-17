@@ -11,7 +11,7 @@ node {
    stage('Compile & Test') {
       // Run the maven build
       if (isUnix()) {
-         sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean compile test"
+         sh "'${mvnHome}/bin/mvn' clean compile test"
       } else {
          bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean compile test/)
       }
@@ -19,7 +19,7 @@ node {
    stage('Package') {
          // Run the maven build
          if (isUnix()) {
-            sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package "
+            sh "'${mvnHome}/bin/mvn' clean package "
          } else {
             bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
          }
