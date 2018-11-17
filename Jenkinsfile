@@ -7,12 +7,11 @@ node {
       // ** NOTE: This 'M3' Maven tool must be configured
       // **       in the global configuration.
       mvnHome = tool 'M3'
-      mvnOpts = "-Xmx1024m -XX:MaxPermSize=256m"
    }
    stage('Compile & Test') {
       // Run the maven build
       if (isUnix()) {
-         sh "'${mvnHome}/bin/mvn' ${mvnOpts} clean compile test"
+         sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean compile test"
       } else {
          bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean compile test/)
       }
