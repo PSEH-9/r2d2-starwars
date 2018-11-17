@@ -19,7 +19,7 @@ public class DataSearchController {
     private SwapiService service;
 
     @GetMapping("/{type}/{name}")
-    public Result search(@PathVariable("type") String type, @PathVariable("name") String name) throws InvalidTypeException {
+    public Result search(@PathVariable("type") String type, @PathVariable("name") String name) throws InvalidTypeException, ServiceUnavailableException {
         return service.search(type, name);
     }
 
