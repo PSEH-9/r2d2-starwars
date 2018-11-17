@@ -8,15 +8,24 @@ node {
       // **       in the global configuration.
       mvnHome = tool 'M3'
    }
-   stage('Build') {
+   stage('Compile & Test') {
       // Run the maven build
       if (isUnix()) {
-         sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean install"
+         sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean compile test"
       } else {
-         bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean install/)
+         bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean compile test/)
       }
    }
+   stage('Package') {
+         // Run the maven build
+         if (isUnix()) {
+            sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package "
+         } else {
+            bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
+         }
+      }
    stage('Deploy') {
-      sh "scp -r -i jenkins.pem target/  ubuntu@ec2-18-217-63-227.us-east-2.compute.amazonaws.com:/home/ubuntu/workspace/team-standings"
+      sh "scp -r -i jenkins.pem target/*.jar  ubuntu@ec2-18-216-165-122.us-east-2.compute.amazonaws.com:/home/ubuntu/workspace/r2d2"
    }
+
 }
